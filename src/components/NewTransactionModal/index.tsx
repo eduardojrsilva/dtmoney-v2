@@ -1,44 +1,56 @@
-import * as Dialog from '@radix-ui/react-dialog';
-import * as Zod from 'zod';
-import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react';
+import React, { useContext } from 'react'
+import * as Dialog from '@radix-ui/react-dialog'
+import * as Zod from 'zod'
+import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react'
+import { Controller, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-import { CloseButton, Content, Overlay, TransactionType, TransactionTypeButton } from './styles';
-import { Controller, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useContext } from 'react';
-import { TransactionsContext } from '../../contexts/TransactionsContext';
+import { TransactionsContext } from '../../contexts/TransactionsContext'
+
+import {
+  CloseButton,
+  Content,
+  Overlay,
+  TransactionType,
+  TransactionTypeButton,
+} from './styles'
 
 const newTransactionFormSchema = Zod.object({
   description: Zod.string(),
   price: Zod.number(),
   category: Zod.string(),
   type: Zod.enum(['income', 'outcome']),
-});
+})
 
-type NewTransactionFormInputs = Zod.infer<typeof newTransactionFormSchema>;
+type NewTransactionFormInputs = Zod.infer<typeof newTransactionFormSchema>
 
 const NewTransactionModal: React.FC = () => {
-  const { createTransaction } = useContext(TransactionsContext);
+  const { createTransaction } = useContext(TransactionsContext)
 
   const {
     control,
     register,
     handleSubmit,
     formState: { isSubmitting },
-    reset
+    reset,
   } = useForm<NewTransactionFormInputs>({
-    resolver: zodResolver(newTransactionFormSchema)
-  });
+    resolver: zodResolver(newTransactionFormSchema),
+  })
 
-  const handleCreateNewTransaction = async ({ description, category, price, type }: NewTransactionFormInputs) => {
+  const handleCreateNewTransaction = async ({
+    description,
+    category,
+    price,
+    type,
+  }: NewTransactionFormInputs) => {
     await createTransaction({
       description,
       price,
       category,
-      type
-    });
+      type,
+    })
 
-    reset();
+    reset()
   }
 
   return (
@@ -79,7 +91,10 @@ const NewTransactionModal: React.FC = () => {
             name="type"
             render={({ field }) => {
               return (
-                <TransactionType onValueChange={field.onChange} value={field.value}>
+                <TransactionType
+                  onValueChange={field.onChange}
+                  value={field.value}
+                >
                   <TransactionTypeButton $variant="income" value="income">
                     <ArrowCircleUp size={24} />
                     Entrada
@@ -94,12 +109,13 @@ const NewTransactionModal: React.FC = () => {
             }}
           />
 
-          <button type="submit" disabled={isSubmitting}>Cadastrar</button>
+          <button type="submit" disabled={isSubmitting}>
+            Cadastrar
+          </button>
         </form>
-
       </Content>
     </Dialog.Portal>
-  );
-};
+  )
+}
 
-export default NewTransactionModal;
+export default NewTransactionModal

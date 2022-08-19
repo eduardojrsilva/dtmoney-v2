@@ -1,25 +1,20 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext } from 'react'
 
-import { TransactionsContext } from "../../contexts/TransactionsContext";
-import { dateFormatter, priceFormatter } from "../../utils/formatter";
+import { TransactionsContext } from '../../contexts/TransactionsContext'
+import { dateFormatter, priceFormatter } from '../../utils/formatter'
 
-import Header from "../../components/Header";
-import Summary from "../../components/Summary";
-import SearchForm from "./components/SearchForm";
+import Header from '../../components/Header'
+import Summary from '../../components/Summary'
+import SearchForm from './components/SearchForm'
 
-import { PriceHighlight, TransactionsContainer, TransactionsTable } from "./styles";
-
-interface Transaction {
-  id: number;
-  description: string;
-  type: 'income' | 'outcome';
-  price: number;
-  category: string;
-  createdAt: string;
-}
+import {
+  PriceHighlight,
+  TransactionsContainer,
+  TransactionsTable,
+} from './styles'
 
 const Transactions: React.FC = () => {
-  const { transactions } = useContext(TransactionsContext);
+  const { transactions } = useContext(TransactionsContext)
 
   return (
     <div>
@@ -31,7 +26,7 @@ const Transactions: React.FC = () => {
 
         <TransactionsTable>
           <tbody>
-            {transactions.map(transaction => (
+            {transactions.map((transaction) => (
               <tr key={transaction.id}>
                 <td width="50%">{transaction.description}</td>
                 <td>
@@ -48,7 +43,7 @@ const Transactions: React.FC = () => {
         </TransactionsTable>
       </TransactionsContainer>
     </div>
-  );
-};
+  )
+}
 
-export default Transactions;
+export default Transactions

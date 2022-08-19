@@ -1,32 +1,32 @@
-import { useContext } from "react";
-import { useForm } from "react-hook-form";
-import * as Zod from "zod";
-import { zodResolver } from '@hookform/resolvers/zod';
-import { MagnifyingGlass } from "phosphor-react";
+import React, { useContext } from 'react'
+import { useForm } from 'react-hook-form'
+import * as Zod from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { MagnifyingGlass } from 'phosphor-react'
 
-import { TransactionsContext } from "../../../../contexts/TransactionsContext";
+import { TransactionsContext } from '../../../../contexts/TransactionsContext'
 
-import { SearchFormContainer } from "./styles";
+import { SearchFormContainer } from './styles'
 
 const searchFormSchema = Zod.object({
   query: Zod.string(),
-});
+})
 
-type SearchFormInputs = Zod.infer<typeof searchFormSchema>;
+type SearchFormInputs = Zod.infer<typeof searchFormSchema>
 
 const SearchForm: React.FC = () => {
-  const { fetchTransactions } = useContext(TransactionsContext);
+  const { fetchTransactions } = useContext(TransactionsContext)
 
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting }
+    formState: { isSubmitting },
   } = useForm<SearchFormInputs>({
-    resolver: zodResolver(searchFormSchema)
-  });
+    resolver: zodResolver(searchFormSchema),
+  })
 
   const handleSearchTransactions = async (data: SearchFormInputs) => {
-    await fetchTransactions(data.query);
+    await fetchTransactions(data.query)
   }
 
   return (
@@ -42,7 +42,7 @@ const SearchForm: React.FC = () => {
         Buscar
       </button>
     </SearchFormContainer>
-  );
-};
+  )
+}
 
-export default SearchForm;
+export default SearchForm
