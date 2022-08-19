@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import * as Zod from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MagnifyingGlass } from "phosphor-react";
+
+import { TransactionsContext } from "../../../../contexts/TransactionsContext";
 
 import { SearchFormContainer } from "./styles";
 
@@ -12,6 +15,8 @@ const searchFormSchema = Zod.object({
 type SearchFormInputs = Zod.infer<typeof searchFormSchema>;
 
 const SearchForm: React.FC = () => {
+  const { fetchTransactions } = useContext(TransactionsContext);
+
   const {
     register,
     handleSubmit,
@@ -21,9 +26,7 @@ const SearchForm: React.FC = () => {
   });
 
   const handleSearchTransactions = async (data: SearchFormInputs) => {
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    console.log(data);
+    await fetchTransactions(data.query);
   }
 
   return (
