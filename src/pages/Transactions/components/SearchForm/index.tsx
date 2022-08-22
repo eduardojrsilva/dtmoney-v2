@@ -1,8 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import * as Zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MagnifyingGlass } from 'phosphor-react'
+import { useContextSelector } from 'use-context-selector'
 
 import { TransactionsContext } from '../../../../contexts/TransactionsContext'
 
@@ -15,7 +16,12 @@ const searchFormSchema = Zod.object({
 type SearchFormInputs = Zod.infer<typeof searchFormSchema>
 
 const SearchForm: React.FC = () => {
-  const { fetchTransactions } = useContext(TransactionsContext)
+  const fetchTransactions = useContextSelector(
+    TransactionsContext,
+    (context) => {
+      return context.fetchTransactions
+    },
+  )
 
   const {
     register,
