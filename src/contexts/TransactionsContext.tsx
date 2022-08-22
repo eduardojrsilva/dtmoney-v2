@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 import { createContext } from 'use-context-selector'
 
 import { api } from '../lib/axios'
@@ -38,24 +38,22 @@ const TransactionsProvider: React.FC<TransactionsProviderProps> = ({
 }) => {
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
-  const createTransaction = async ({
-    description,
-    category,
-    price,
-    type,
-  }: CreateTransactionInput) => {
-    const { data } = await api.post('transactions', {
-      description,
-      category,
-      price,
-      type,
-      createdAt: new Date(),
-    })
+  const createTransaction = useCallback(
+    async ({ description, category, price, type }: CreateTransactionInput) => {
+      const { data } = await api.post('transactions', {
+        description,
+        category,
+        price,
+        type,
+        createdAt: new Date(),
+      })
 
-    setTransactions((state) => [data, ...state])
-  }
+      setTransactions((state) => [data, ...state])
+    },
+    [],
+  )
 
-  const fetchTransactions = async (query?: string) => {
+  const fetchTransactions = useCallback(async (query?: string) => {
     const { data } = await api.get('transactions', {
       params: {
         _sort: 'createdAt',
@@ -65,10 +63,11 @@ const TransactionsProvider: React.FC<TransactionsProviderProps> = ({
     })
 
     setTransactions(data)
-  }
+  }, [])
 
   useEffect(() => {
     fetchTransactions()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <TransactionsContext.Provider
