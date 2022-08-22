@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { getScrollbarStyle } from 'css-blocks-styled-components'
 
 export const TransactionsContainer = styled.main`
   width: 100%;
@@ -7,11 +8,22 @@ export const TransactionsContainer = styled.main`
   padding: 0 1.5rem;
 `
 
+export const TableContainer = styled.div`
+  overflow-x: auto;
+
+  ${({ theme }) =>
+    getScrollbarStyle({
+      scrollColor: theme['gray-600'],
+      backgroundColor: theme['gray-800'],
+    })}
+`
+
 export const TransactionsTable = styled.table`
   width: 100%;
+  min-width: 800px;
   border-collapse: separate;
   border-spacing: 0 0.5rem;
-  /* margin-top: 1.5rem; */
+  margin-top: 1.5rem;
 
   td {
     padding: 1.25rem 2rem;

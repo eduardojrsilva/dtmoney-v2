@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { getScrollbarStyle } from 'css-blocks-styled-components'
 
 export const SummaryContainer = styled.section`
   width: 100%;
@@ -11,6 +12,17 @@ export const SummaryContainer = styled.section`
   gap: 2rem;
 
   margin-top: -5rem;
+  overflow-y: auto;
+
+  ${({ theme }) =>
+    getScrollbarStyle({
+      scrollColor: theme['gray-600'],
+      backgroundColor: theme['gray-800'],
+    })}
+
+  @media (max-width: 800px) {
+    margin-top: -4rem;
+  }
 `
 
 interface SummaryCardProps {
@@ -21,6 +33,7 @@ export const SummaryCard = styled.div<SummaryCardProps>`
   background: ${({ theme }) => theme['gray-600']};
   border-radius: 6px;
   padding: 2rem;
+  min-width: 280px;
 
   > header {
     display: flex;
@@ -40,4 +53,9 @@ export const SummaryCard = styled.div<SummaryCardProps>`
     css`
       background: ${theme['green-700']};
     `}
+
+  @media (max-width: 800px) {
+    padding: 1rem;
+    min-width: 230px;
+  }
 `

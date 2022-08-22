@@ -21,6 +21,7 @@ export const SearchFormContainer = styled.form`
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    width: 120px;
 
     border: 0;
     padding: 1rem;
@@ -41,6 +42,14 @@ export const SearchFormContainer = styled.form`
       border-color: ${({ theme }) => theme['green-500']};
       color: ${({ theme }) => theme.white};
       transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    }
+  }
+
+  @media (max-width: 450px) {
+    flex-direction: column;
+
+    > button {
+      align-self: center;
     }
   }
 `

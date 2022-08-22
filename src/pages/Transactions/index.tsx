@@ -10,6 +10,7 @@ import SearchForm from './components/SearchForm'
 
 import {
   PriceHighlight,
+  TableContainer,
   TransactionsContainer,
   TransactionsTable,
 } from './styles'
@@ -27,23 +28,27 @@ const Transactions: React.FC = () => {
       <TransactionsContainer>
         <SearchForm />
 
-        <TransactionsTable>
-          <tbody>
-            {transactions.map((transaction) => (
-              <tr key={transaction.id}>
-                <td width="50%">{transaction.description}</td>
-                <td>
-                  <PriceHighlight $variant={transaction.type}>
-                    {transaction.type === 'outcome' && '- '}
-                    {priceFormatter.format(transaction.price)}
-                  </PriceHighlight>
-                </td>
-                <td>{transaction.category}</td>
-                <td>{dateFormatter.format(new Date(transaction.createdAt))}</td>
-              </tr>
-            ))}
-          </tbody>
-        </TransactionsTable>
+        <TableContainer>
+          <TransactionsTable>
+            <tbody>
+              {transactions.map((transaction) => (
+                <tr key={transaction.id}>
+                  <td width="50%">{transaction.description}</td>
+                  <td>
+                    <PriceHighlight $variant={transaction.type}>
+                      {transaction.type === 'outcome' && '- '}
+                      {priceFormatter.format(transaction.price)}
+                    </PriceHighlight>
+                  </td>
+                  <td>{transaction.category}</td>
+                  <td>
+                    {dateFormatter.format(new Date(transaction.createdAt))}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </TransactionsTable>
+        </TableContainer>
       </TransactionsContainer>
     </div>
   )

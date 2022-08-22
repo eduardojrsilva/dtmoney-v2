@@ -14,7 +14,7 @@ const Header: React.FC = () => {
 
         <Dialog.Root>
           <Dialog.Trigger asChild>
-            <NewTransactionButton>Nova Transação</NewTransactionButton>
+            <NewTransactionButton />
           </Dialog.Trigger>
 
           <NewTransactionModal />
